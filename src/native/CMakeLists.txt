@@ -3,7 +3,7 @@
 # add/modify/remove settings to build your specific library.   #
 ################################################################
 
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 2.8.12)
 
 # Define project and related variables
 # (required by sbt-jni) please use semantic versioning
@@ -48,7 +48,6 @@ file(GLOB LIB_SRC
 
 link_libraries("m")
 add_compile_options("-Wall" "-DCTRLC=1" "-Wextra" "-DLDL_LONG" "-DDLONG")
-add_link_options("-Wall" "-DCTRLC=1" "-Wextra" "-DLDL_LONG" "-DDLONG")
 
 # Setup installation targets
 # (required by sbt-jni) major version should always be appended to library name
