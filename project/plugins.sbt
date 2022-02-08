@@ -1,1 +1,1 @@
-addSbtPlugin("ch.jodersky" % "sbt-jni" % "1.4.1")
+addSbtPlugin("com.github.sbt" % "sbt-jni" % "1.5.3")
