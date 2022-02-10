@@ -34,6 +34,7 @@ pipeline {
         stage('Compile and test') {
             steps {
                 sh '''
+                export JAVA_HOME="$(readlink -f /usr/lib/jvm/jre)"
                 export JAVA_INCLUDE_PATH="$(readlink -f /usr/lib/jvm/jre)/include"
                 sbt -Dsbt.log.noformat=true +test
                 '''
