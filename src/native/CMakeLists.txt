@@ -18,7 +18,7 @@ set(JAVA_INCLUDE_PATH "$ENV{JAVA_HOME}/include")
 set(JAVA_AWT_INCLUDE_PATH "$ENV{JAVA_HOME}/include")
 if (APPLE)
     set(JAVA_INCLUDE_PATH2 "$ENV{JAVA_HOME}/include/darwin")
-elseif (LINUX)
+else()
     set(JAVA_INCLUDE_PATH2 "$ENV{JAVA_HOME}/include/linux")
 endif()
 
