@@ -3,7 +3,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
     }
 
-    agent any
+    agent { node 'i-09ceab765ecbc26ee' }
 
     stages {
         /*
@@ -33,7 +33,9 @@ pipeline {
 
         stage('Compile and test') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true javah +test'
+                sh '''
+                sbt -Dsbt.log.noformat=true +test
+                '''
             }
         }
     }
