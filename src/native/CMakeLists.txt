@@ -16,12 +16,6 @@ set(PROJECT_VERSION_PATCH 1)
 # Setup JNI
 set(JAVA_INCLUDE_PATH "$ENV{JAVA_HOME}/include")
 set(JAVA_AWT_INCLUDE_PATH "$ENV{JAVA_HOME}/include")
-if (APPLE)
-    set(JAVA_INCLUDE_PATH2 "$ENV{JAVA_HOME}/include/darwin")
-else()
-    set(JAVA_INCLUDE_PATH2 "$ENV{JAVA_HOME}/include/linux")
-endif()
-
 find_package(JNI REQUIRED)
 if (JNI_FOUND)
     message (STATUS "JNI include directories: ${JNI_INCLUDE_DIRS}")
