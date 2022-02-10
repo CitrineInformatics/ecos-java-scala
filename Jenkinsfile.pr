@@ -36,6 +36,7 @@ pipeline {
                 sh '''
                 export JAVA_HOME="$(readlink -f /usr/lib/jvm/jre)"
                 export PATH="${JAVA_HOME}/bin:${PATH}"
+                ls -al ${JAVA_HOME}/include
                 sbt -Dsbt.log.noformat=true +test
                 '''
             }
