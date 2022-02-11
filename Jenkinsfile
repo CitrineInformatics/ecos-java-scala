@@ -5,6 +5,9 @@ pipeline {
 
     agent any
 
+    environment {
+      JAVA_HOME = sh(script: 'readlink -f /usr/lib/jvm/jre', returnStdout: true).trim()
+    }
     stages {
         stage('Get ecos') {
             steps {
