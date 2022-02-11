@@ -34,7 +34,6 @@ pipeline {
         stage('Compile and test') {
             steps {
                 sh '''
-                export JAVA_HOME="$(readlink -f /usr/lib/jvm/jre)"
                 sbt -Dsbt.log.noformat=true +test
                 '''
             }
