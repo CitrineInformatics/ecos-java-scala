@@ -3,7 +3,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
     }
 
-    agent { node 'i-09ceab765ecbc26ee' }
+    agent any
 
     stages {
         /*
