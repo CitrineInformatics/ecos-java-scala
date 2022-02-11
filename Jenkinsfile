@@ -5,14 +5,17 @@ pipeline {
 
     agent any
 
+    environment {
+        JAVA_HOME = sh(script: 'readlink -f /usr/lib/jvm/jre', returnStdout: true).trim()
+    }
+
     stages {
         stage('Get ecos') {
             steps {
-                sh '''
-                    git submodule update --init --recursive
-                '''
+                sh 'git submodule update --init --recursive'
             }
         }
+
         stage('Tell ECOS to suppress prints') {
             steps {
                 sh '''
@@ -21,14 +24,13 @@ pipeline {
                 '''
             }
         }
+
         stage('Compile and test') {
             steps {
-                sh '''
-                    export JAVA_HOME="$(readlink -f /usr/lib/jvm/jre)"
-                    sbt -Dsbt.log.noformat=true +test
-                '''
+                sh 'sbt -Dsbt.log.noformat=true +test'
             }
         }
+
         stage('Publish to nexus') {
             steps {
                 sh 'sbt -Dsbt.log.noformat=true +publish'
