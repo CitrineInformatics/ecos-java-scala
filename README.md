@@ -50,8 +50,8 @@ sbt +publishLocal
 The above will compile native ecos library and put that into jar. Platform is added as classifier to the published jar.
 For Mac OS below files will be generated:
 ```
-${HOME}/.ivy2/local/io.citrine/ecos_2.12/0.0.1-SNAPSHOT/jars/ecos_2.12-Mac_OS_X.jar
-${HOME}/.ivy2/local/io.citrine/ecos_2.13/0.0.1-SNAPSHOT/jars/ecos_2.13-Mac_OS_X.jar
+${HOME}/.ivy2/local/io.citrine/ecos_2.12/X.X.X/jars/ecos_2.12-Mac_OS_X.jar
+${HOME}/.ivy2/local/io.citrine/ecos_2.13/X.X.X/jars/ecos_2.13-Mac_OS_X.jar
 ```
 
 ## Supported features
@@ -67,7 +67,7 @@ Add library dependency including classifier, e.g.:
 ```
 private val osNameClassifier = System.getProperty("os.name").replace(' ', '_')
 [...]
-  libraryDependencies += "io.citrine" %% "ecos" % "0.0.2" classifier osNameClassifier
+libraryDependencies += "io.citrine" %% "ecos" % "X.X.X" classifier osNameClassifier
 ```
 
 Native library will be loaded when instance of `NativeECOS` is created.

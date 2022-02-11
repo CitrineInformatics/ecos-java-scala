@@ -1,6 +1,6 @@
 package io.citrine.ecos
 
-import ch.jodersky.jni.nativeLoader
+import com.github.sbt.jni.nativeLoader
 
 @nativeLoader("ecos0")
 class NativeECOS {
