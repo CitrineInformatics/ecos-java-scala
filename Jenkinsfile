@@ -26,7 +26,10 @@ pipeline {
         }
         stage('Compile and test') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true +test'
+                sh '''
+                    export JAVA_HOME="$(readlink -f /usr/lib/jvm/jre)"
+                    sbt -Dsbt.log.noformat=true +test
+                '''
             }
         }
         stage('Publish to nexus') {
