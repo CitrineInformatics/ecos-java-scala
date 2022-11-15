@@ -54,6 +54,24 @@ ${HOME}/.ivy2/local/io.citrine/ecos_2.12/X.X.X/jars/ecos_2.12-Mac_OS_X.jar
 ${HOME}/.ivy2/local/io.citrine/ecos_2.13/X.X.X/jars/ecos_2.13-Mac_OS_X.jar
 ```
 
+### Troubleshooting
+
+For certain combinations of Java, CMake, and XCode the `FindJNI` module does not work properly, leading to the following error during compilation:
+
+```
+Could NOT find JNI (missing: JAVA_INCLUDE_PATH JAVA_INCLUDE_PATH2 JAVA_AWT_INCLUDE_PATH)
+```
+
+The solution is to add the following lines to `src/native/CMakeLists.txt`, setting some paths explicitly.
+[Source](https://gitlab.kitware.com/cmake/cmake/-/issues/23364).
+
+```
+set(JAVA_HOME "$ENV{JAVA_HOME}")
+set(JAVA_INCLUDE_PATH "${JAVA_HOME}/include")
+set(JAVA_INCLUDE_PATH2 "${JAVA_HOME}/include/darwin")
+set(JAVA_AWT_INCLUDE_PATH "${JAVA_HOME}/include")
+```
+
 ## Supported features
 
 + Unconstrained quadratic minimization

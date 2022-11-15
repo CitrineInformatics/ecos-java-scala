@@ -1,8 +1,7 @@
 import Dependencies._
 
-ThisBuild / scalaVersion       := "2.12.10"
-ThisBuild / crossScalaVersions := List("2.12.10", "2.13.5")
-ThisBuild / version            := "0.0.8"
+ThisBuild / scalaVersion       := "2.13.5"
+ThisBuild / version            := "0.0.9"
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
 ThisBuild / artifactClassifier := Some(osNameClassifier + "_" + osArchitecture)
@@ -29,6 +28,6 @@ lazy val root = (project in file("."))
   .settings(commonSettings:_*)
   .settings(
     name := "ecos",
-    libraryDependencies ++= Seq(breeze, jblas, log4j)
+    libraryDependencies ++= Seq(breeze, jblas)
   )
   .enablePlugins(JniNative)
