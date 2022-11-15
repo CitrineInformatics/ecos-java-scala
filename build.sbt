@@ -2,10 +2,14 @@ import Dependencies._
 
 ThisBuild / scalaVersion       := "2.12.10"
 ThisBuild / crossScalaVersions := List("2.12.10", "2.13.5")
-ThisBuild / version            := "0.0.7"
+ThisBuild / version            := "0.0.8"
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
-ThisBuild / artifactClassifier := Some(System.getProperty("os.name").replace(' ', '_'))
+ThisBuild / artifactClassifier := Some(osNameClassifier + "_" + osArchitecture)
+
+// Publish versions based on OS name/cpu architecture
+lazy val osNameClassifier = System.getProperty("os.name").replace(' ', '_').trim
+lazy val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
 
 lazy val commonSettings = Seq(
   javah / target := sourceDirectory.value / "native" / "include",

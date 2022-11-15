@@ -65,9 +65,11 @@ ${HOME}/.ivy2/local/io.citrine/ecos_2.13/X.X.X/jars/ecos_2.13-Mac_OS_X.jar
 
 Add library dependency including classifier, e.g.:
 ```
-private val osNameClassifier = System.getProperty("os.name").replace(' ', '_')
+private val osNameClassifier = System.getProperty("os.name").replace(' ', '_').trim
+private val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
+private val artifactClassifier = osNameClassifier + "_" + osArchitecture
 [...]
-libraryDependencies += "io.citrine" %% "ecos" % "X.X.X" classifier osNameClassifier
+libraryDependencies += "io.citrine" %% "ecos" % "X.X.X" classifier artifactClassifier
 ```
 
 Native library will be loaded when instance of `NativeECOS` is created.
