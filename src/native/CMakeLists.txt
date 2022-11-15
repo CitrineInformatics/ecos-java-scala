@@ -11,7 +11,12 @@ cmake_minimum_required(VERSION 3.0.0)
 project (ecos)
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 0)
-set(PROJECT_VERSION_PATCH 1)
+set(PROJECT_VERSION_PATCH 8)
+
+set(JAVA_HOME "$ENV{JAVA_HOME}")
+set(JAVA_INCLUDE_PATH "${JAVA_HOME}/include")
+set(JAVA_INCLUDE_PATH2 "${JAVA_HOME}/include/darwin")
+set(JAVA_AWT_INCLUDE_PATH "${JAVA_HOME}/include")
 
 # Setup JNI
 find_package(JNI REQUIRED)

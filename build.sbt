@@ -1,11 +1,14 @@
 import Dependencies._
 
-ThisBuild / scalaVersion       := "2.12.10"
-ThisBuild / crossScalaVersions := List("2.12.10", "2.13.5")
-ThisBuild / version            := "0.0.7"
+ThisBuild / scalaVersion       := "2.13.5"
+ThisBuild / crossScalaVersions := List("2.13.5")
+ThisBuild / version            := "0.0.8"
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
-ThisBuild / artifactClassifier := Some(System.getProperty("os.name").replace(' ', '_'))
+ThisBuild / artifactClassifier := Some(osClassifier + "_" + osArchitecture)
+
+lazy val osClassifier = System.getProperty("os.name").replace(' ', '_').trim
+lazy val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
 
 lazy val commonSettings = Seq(
   javah / target := sourceDirectory.value / "native" / "include",
