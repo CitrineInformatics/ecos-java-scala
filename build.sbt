@@ -5,9 +5,10 @@ ThisBuild / crossScalaVersions := List("2.13.5")
 ThisBuild / version            := "0.0.8"
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
-ThisBuild / artifactClassifier := Some(osClassifier + "_" + osArchitecture)
+ThisBuild / artifactClassifier := Some(osNameClassifier + "_" + osArchitecture)
 
-lazy val osClassifier = System.getProperty("os.name").replace(' ', '_').trim
+// Publish versions based on OS name/cpu architecture
+lazy val osNameClassifier = System.getProperty("os.name").replace(' ', '_').trim
 lazy val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
 
 lazy val commonSettings = Seq(
