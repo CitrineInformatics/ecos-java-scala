@@ -27,13 +27,13 @@ pipeline {
 
         stage('Compile and test') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true +test'
+                sh 'sbt -Dsbt.log.noformat=true test'
             }
         }
 
         stage('Publish to nexus') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true +publish'
+                sh 'sbt -Dsbt.log.noformat=true publish'
             }
         }
     }

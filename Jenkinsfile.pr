@@ -33,7 +33,7 @@ pipeline {
 
         stage('Compile and test') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true +test'
+                sh 'sbt -Dsbt.log.noformat=true test'
             }
         }
     }

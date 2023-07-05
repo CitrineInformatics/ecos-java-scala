@@ -1,13 +1,12 @@
 import Dependencies._
 
-ThisBuild / scalaVersion       := "2.13.5"
-ThisBuild / version            := "0.0.9"
+ThisBuild / scalaVersion       := "2.13.10"
+ThisBuild / version            := "0.0.10"
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
-ThisBuild / artifactClassifier := Some(osNameClassifier + "_" + osArchitecture)
+ThisBuild / artifactClassifier := Some(osArchitecture)
 
-// Publish versions based on OS name/cpu architecture
-lazy val osNameClassifier = System.getProperty("os.name").replace(' ', '_').trim
+// Publish artifacts based on CPU architecture
 lazy val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
 
 lazy val commonSettings = Seq(
