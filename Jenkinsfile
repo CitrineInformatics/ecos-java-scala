@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build Container') {
             steps {
-                sh 'docker build --no-cache -t ecos-java-scala .'
+                sh 'docker build -t ecos-java-scala .'
             }
         }
 

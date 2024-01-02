@@ -8,7 +8,7 @@ RUN apt-get -yq update && apt-get -yq install cmake build-essential
 
 COPY . .
 
-RUN git submodule update --init --recursive
+RUN --mount=type=cache,target=/opt/ecos-java-scala/ecos git submodule update --init --recursive
 
 RUN sed -i 's/PRINTLEVEL (2)/PRINTLEVEL (0)/g' ecos/include/glblopts.h && \
     sed -i 's/PROFILING (1)/PROFILING (0)/g' ecos/include/glblopts.h
