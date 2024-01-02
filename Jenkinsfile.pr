@@ -5,9 +5,6 @@ pipeline {
 
     agent any
 
-    environment {
-        JAVA_HOME = sh(script: 'readlink -f /usr/lib/jvm/jre', returnStdout: true).trim()
-    }
 
     stages {
         stage('Update PR check status to pending') {
@@ -16,26 +13,18 @@ pipeline {
             }
         }
 
-        stage('Get ecos') {
+        stage('Build Container') {
             steps {
-                sh 'git submodule update --init --recursive'
+                sh 'docker build -t ecos-java-scala .'
             }
         }
 
-        stage('Tell ECOS to suppress prints') {
+        stage('Test') {
             steps {
-                sh '''
-                    sed -i 's/PRINTLEVEL (2)/PRINTLEVEL (0)/g' ecos/include/glblopts.h
-                    sed -i 's/PROFILING (1)/PROFILING (0)/g' ecos/include/glblopts.h
-                '''
+                sh 'docker run --rm ecos-java-scala:latest sbt -Dsbt.log.noformat=true +test'
             }
         }
 
-        stage('Compile and test') {
-            steps {
-                sh 'sbt -Dsbt.log.noformat=true +test'
-            }
-        }
     }
 
     post {

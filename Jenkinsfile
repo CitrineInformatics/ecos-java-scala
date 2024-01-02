@@ -10,30 +10,22 @@ pipeline {
     }
 
     stages {
-        stage('Get ecos') {
+        stage('Build Container') {
             steps {
-                sh 'git submodule update --init --recursive'
+                sh 'docker build -t ecos-java-scala .'
             }
         }
 
-        stage('Tell ECOS to suppress prints') {
-            steps {
-                sh '''
-                    sed -i 's/PRINTLEVEL (2)/PRINTLEVEL (0)/g' ecos/include/glblopts.h
-                    sed -i 's/PROFILING (1)/PROFILING (0)/g' ecos/include/glblopts.h
-                '''
-            }
-        }
 
-        stage('Compile and test') {
+        stage('Test') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true +test'
+                sh 'docker run --rm ecos-java-scala:latest sbt -Dsbt.log.noformat=true +test'
             }
         }
 
         stage('Publish to nexus') {
             steps {
-                sh 'sbt -Dsbt.log.noformat=true +publish'
+                sh 'docker run --rm ecos-java-scala:latest sbt -Dsbt.log.noformat=true +publish'
             }
         }
     }
