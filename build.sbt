@@ -1,7 +1,8 @@
 import Dependencies._
 
-ThisBuild / scalaVersion       := "2.13.5"
-ThisBuild / version            := "0.0.9"
+ThisBuild / scalaVersion       := "2.13.15"
+ThisBuild / version            := "0.0.10"
+ThisBuild / versionScheme      := Some("early-semver")
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
 ThisBuild / artifactClassifier := Some(osNameClassifier + "_" + osArchitecture)
