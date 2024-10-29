@@ -42,15 +42,14 @@ The file is committed into the repository, so you need to invoke above only afte
 
 ### Publish artefacts to local repository
 
-To publish Scala 2.12 and Scala 2.13 versions to local repository invoke:
+To publish the Scala 2.13 version to local repository invoke:
 ```
-sbt +publishLocal
+./local_dev/publish_local_with_lowered_log_levels.sh
 ```
 
-The above will compile native ecos library and put that into jar. Platform is added as classifier to the published jar.
+The above will set the ecos log level configurtions to sane levels, compile native ecos library and put that into jar. Platform is added as classifier to the published jar.
 For Mac OS below files will be generated:
 ```
-${HOME}/.ivy2/local/io.citrine/ecos_2.12/X.X.X/jars/ecos_2.12-Mac_OS_X.jar
 ${HOME}/.ivy2/local/io.citrine/ecos_2.13/X.X.X/jars/ecos_2.13-Mac_OS_X.jar
 ```
 
