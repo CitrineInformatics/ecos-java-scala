@@ -34,7 +34,7 @@ lazy val commonSettings = Seq(
     if (isSnapshot.value) {
       None
     } else {
-      Some(publishTarget)
+      publishTarget
     }
   },
   publishConfiguration := publishConfiguration.value.withOverwrite(true)
