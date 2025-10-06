@@ -23,7 +23,7 @@ jobs:
         run: docker run --rm ecos-java-scala:latest sbt -Dsbt.log.noformat=true +test
 
       - name: Publish to Github Repositories
-        if: github.event_name == 'push' && github.ref == 'refs/heads/${{ github.event.repository.default_branch }}'
+        #if: github.event_name == 'push' && github.ref == 'refs/heads/${{ github.event.repository.default_branch }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
