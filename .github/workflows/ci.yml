@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main # Change to your default branch if different
+  pull_request:
+
+env:
+  JAVA_OPTS: "-Xmx4G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ecos-java-scala .
+
+      - name: Run tests
+        run: docker run --rm ecos-java-scala:latest sbt -Dsbt.log.noformat=true +test
+
+      - name: Publish to Github Repositories
+        if: github.event_name == 'push' && github.ref == 'refs/heads/${{ github.event.repository.default_branch }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: docker run --rm -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -e GITHUB_ACTOR=${{ github.actor }} -e PUBLISH_TO_GITHUB=true ecos-java-scala:latest sbt -Dsbt.log.noformat=true +publish
