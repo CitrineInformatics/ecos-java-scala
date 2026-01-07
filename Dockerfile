@@ -15,3 +15,5 @@ ADD https://github.com/embotech/ecos.git ecos
 
 RUN sed -i 's/PRINTLEVEL (2)/PRINTLEVEL (0)/g' ecos/include/glblopts.h && \
     sed -i 's/PROFILING (1)/PROFILING (0)/g' ecos/include/glblopts.h
+
+RUN cat ecos/include/glblopts.h
