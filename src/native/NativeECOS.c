@@ -116,6 +116,18 @@ JNIEXPORT jint JNICALL Java_io_citrine_ecos_NativeECOS_EcosSolve(JNIEnv *env, jo
 		ECOS_cleanup(wspace, 0);
 	}
 
+	/* JNI_ABORT: inputs are read-only, discard any copy without writing back. */
+	(*env)->ReleaseIntArrayElements(env, q, qPtr, JNI_ABORT);
+	(*env)->ReleaseDoubleArrayElements(env, Gpr, GprPtr, JNI_ABORT);
+	(*env)->ReleaseIntArrayElements(env, Gjc, GjcPtr, JNI_ABORT);
+	(*env)->ReleaseIntArrayElements(env, Gir, GirPtr, JNI_ABORT);
+	(*env)->ReleaseDoubleArrayElements(env, Apr, AprPtr, JNI_ABORT);
+	(*env)->ReleaseIntArrayElements(env, Ajc, AjcPtr, JNI_ABORT);
+	(*env)->ReleaseIntArrayElements(env, Air, AirPtr, JNI_ABORT);
+	(*env)->ReleaseDoubleArrayElements(env, c, cPtr, JNI_ABORT);
+	(*env)->ReleaseDoubleArrayElements(env, h, hPtr, JNI_ABORT);
+	(*env)->ReleaseDoubleArrayElements(env, b, bPtr, JNI_ABORT);
+
 	return exitflag;
 }
 
