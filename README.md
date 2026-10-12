@@ -70,7 +70,7 @@ The CI workflow builds the native library on four runners, one per platform:
 | `macos-15-intel` | `native/x86_64-darwin/` |
 
 A final job collects the four libraries into one jar and checks that each directory is present.
-On a push to `master` that job publishes the jar to GitHub Packages.
+On a push to `main` that job publishes the jar to GitHub Packages.
 That jar has no classifier.
 At runtime sbt-jni reads `uname -sm` and loads the library from the directory with that name.
 
