@@ -21,8 +21,9 @@ amd and ldl JNI libraries are licensed under LGPL honoring original Tim Davis's 
 ### Prerequisites
 
  * sbt
- * cmake
- * [optional] Java SDK 11 (for javah)
+ * cmake 3.10 or newer
+ * JDK 17
+ * [optional] `javah` from a JDK 11 or older, to regenerate the JNI header
 
 ### Clone submodules
 
@@ -47,11 +48,33 @@ To publish the Scala 2.13 version to local repository invoke:
 ./local_dev/publish_local_with_lowered_log_levels.sh
 ```
 
-The above will set the ecos log level configurtions to sane levels, compile native ecos library and put that into jar. Platform is added as classifier to the published jar.
-For Mac OS below files will be generated:
+The script lowers the ECOS log levels and builds the native library for this machine.
+Then sbt packs that library into the jar and writes the jar to:
 ```
-${HOME}/.ivy2/local/io.citrine/ecos_2.13/X.X.X/jars/ecos_2.13-Mac_OS_X.jar
+${HOME}/.ivy2/local/io.citrine/ecos_2.13/X.X.X/jars/ecos_2.13.jar
 ```
+
+A local jar holds one native library, the one for this machine, under `native/<arch>-<kernel>/`.
+On an Apple Silicon Mac that directory is `native/arm64-darwin/`.
+The local ivy repository is first in sbt's resolver order, so mithril builds against the local jar at once.
+
+### Continuous integration and publishing
+
+The CI workflow builds the native library on four runners, one per platform:
+
+| Runner | Platform directory |
+|--------|--------------------|
+| `ubuntu-latest` | `native/x86_64-linux/` |
+| `ubuntu-24.04-arm` | `native/aarch64-linux/` |
+| `macos-latest` | `native/arm64-darwin/` |
+| `macos-15-intel` | `native/x86_64-darwin/` |
+
+A final job collects the four libraries into one jar and checks that each directory is present.
+On a push to `master` that job publishes the jar to GitHub Packages.
+That jar has no classifier.
+At runtime sbt-jni reads `uname -sm` and loads the library from the directory with that name.
+
+GitHub Packages rejects a second publish of the same version, so bump `ThisBuild / version` in `build.sbt` for every PR that changes the library.
 
 ### Troubleshooting
 
@@ -80,13 +103,9 @@ set(JAVA_AWT_INCLUDE_PATH "${JAVA_HOME}/include")
 
 ## Usage in Scala project
 
-Add library dependency including classifier, e.g.:
+Add the library dependency:
 ```
-private val osNameClassifier = System.getProperty("os.name").replace(' ', '_').trim
-private val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
-private val artifactClassifier = osNameClassifier + "_" + osArchitecture
-[...]
-libraryDependencies += "io.citrine" %% "ecos" % "X.X.X" classifier artifactClassifier
+libraryDependencies += "io.citrine" %% "ecos" % "X.X.X"
 ```
 
 Native library will be loaded when instance of `NativeECOS` is created.

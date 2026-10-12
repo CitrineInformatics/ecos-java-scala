@@ -1,6 +1,9 @@
 # ignore target anywhere in tree
 target/
 
+# native libraries collected from other platforms before packaging
+lib_native/
+
 # IntelliJ IDEA files
 .idea/
 *.iml

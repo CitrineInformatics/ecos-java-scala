@@ -1,15 +1,10 @@
 import Dependencies._
 
 ThisBuild / scalaVersion       := "2.13.15"
-ThisBuild / version            := "0.0.14"
+ThisBuild / version            := "0.0.15"
 ThisBuild / versionScheme      := Some("early-semver")
 ThisBuild / organization       := "io.citrine"
 ThisBuild / organizationName   := "Citrine Informatics"
-ThisBuild / artifactClassifier := Some(osNameClassifier + "_" + osArchitecture)
-
-// Publish versions based on OS name/cpu architecture
-lazy val osNameClassifier = System.getProperty("os.name").replace(' ', '_').trim
-lazy val osArchitecture = System.getProperty("os.arch").replace(' ', '_').trim
 
 ThisBuild / credentials += Credentials(
   "GitHub Package Registry",
@@ -22,6 +17,10 @@ lazy val githubRepository = "GitHub Package Registry" at s"https://maven.pkg.git
 
 lazy val commonSettings = Seq(
   javah / target := sourceDirectory.value / "native" / "include",
+  // CI drops libraries from other runners into lib_native/<platform>/ before packaging.
+  // sbt-jni would also map lib_native/ under the host platform; turn that second mapping off.
+  Compile / unmanagedPlatformDependentNativeDirectories := Seq.empty,
+  Test / unmanagedPlatformDependentNativeDirectories := Seq.empty,
   crossPaths := true,
   packageDoc / publishArtifact := false,
   publishTo := Some(githubRepository)
