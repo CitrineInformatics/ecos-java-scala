@@ -69,6 +69,7 @@ The CI workflow builds the native library on four runners, one per platform:
 | `macos-latest` | `native/arm64-darwin/` |
 | `macos-15-intel` | `native/x86_64-darwin/` |
 
+On each runner `sbt test` loads the fresh library and solves two small problems with known answers.
 A final job collects the four libraries into one jar and checks that each directory is present.
 On a push to `main` that job publishes the jar to GitHub Packages.
 That jar has no classifier.
