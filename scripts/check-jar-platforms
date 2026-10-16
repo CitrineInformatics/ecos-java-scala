@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Fail unless the packaged jar holds a native library for every supported platform.
+# Prerequisite: `sbt package` has run.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+jar=$(ls target/scala-2.13/ecos_2.13-*.jar)
+unzip -l "$jar" | grep 'native/'
+for platform in x86_64-linux aarch64-linux arm64-darwin x86_64-darwin; do
+  unzip -l "$jar" | grep -q "native/$platform/libecos0" || { echo "missing native/$platform/"; exit 1; }
+done

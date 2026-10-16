@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Turn off ECOS console prints and profiling before the native build.
+# Prerequisite: the ecos submodule is checked out (git submodule update --init).
+# Side effect: edits ecos/include/glblopts.h in the working tree.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+# -i.bak works with both GNU and BSD sed.
+sed -i.bak 's/PRINTLEVEL (2)/PRINTLEVEL (0)/; s/PROFILING (1)/PROFILING (0)/' ecos/include/glblopts.h
+rm ecos/include/glblopts.h.bak
