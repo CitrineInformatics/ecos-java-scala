@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Fail unless build.sbt sets a version that differs from the one on main.
+# GitHub Packages rejects a second publish of the same version, so every merge must bump it.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+git fetch --quiet origin main:refs/remotes/origin_main
+
+extract_version() {
+  grep -E '^ThisBuild / version +:=' | sed -nE 's/.*"([^"]+)".*/\1/p'
+}
+
+head_version=$(extract_version < build.sbt)
+main_version=$(git cat-file blob origin_main:build.sbt | extract_version)
+
+if [[ "$head_version" == "$main_version" ]]; then
+  echo "build.sbt still sets version $main_version, the version on main. Bump it before merging." >&2
+  exit 1
+fi
+
+echo "Version bumps from $main_version to $head_version"

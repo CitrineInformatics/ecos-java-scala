@@ -75,7 +75,8 @@ On a push to `main` that job publishes the jar to GitHub Packages.
 That jar has no classifier.
 At runtime sbt-jni reads `uname -sm` and loads the library from the directory with that name.
 
-GitHub Packages rejects a second publish of the same version, so bump `ThisBuild / version` in `build.sbt` for every PR that changes the library.
+GitHub Packages rejects a second publish of the same version, so bump `ThisBuild / version` in `build.sbt` in every PR.
+A CI job on each PR runs `scripts/check-version-bump` and fails when the version matches main.
 
 ### Troubleshooting
 
