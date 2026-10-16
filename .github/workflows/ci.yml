@@ -13,6 +13,17 @@ env:
   SBT_OPTS: "-Xmx4G -XX:+UseG1GC"
 
 jobs:
+  version:
+    name: Check the version bump
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fail unless build.sbt bumps the version
+        run: ./scripts/check-version-bump
+
   native:
     name: Native library (${{ matrix.platform }})
     runs-on: ${{ matrix.runner }}
